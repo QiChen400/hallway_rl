@@ -65,8 +65,8 @@ class q_maze():
         if new_state == old_state:
             return -5
         if visited_num_updated >= 0.9*len(self._free_cells):
-            return 100
-        return -1 + 0.1*(visited_num_updated-visited_num)
+            return 200
+        return -1 + 0.4*(visited_num_updated-visited_num)
 
     def update_maze(self):
         nrows, ncols = self.maze.shape
@@ -233,6 +233,8 @@ def train(model, maze, **opt):
                 verbose=0,
             )
             loss = model.evaluate(inputs, targets, verbose=0)
+            if n_episodes >= 1500:
+                game_over = True
 
         if len(win_history) > hsize:
             win_rate = sum(win_history[-hsize:]) / hsize
